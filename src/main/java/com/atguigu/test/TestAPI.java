@@ -4,6 +4,7 @@ import com.google.inject.internal.util.$ToStringBuilder;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.*;
 import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.protobuf.generated.ClientProtos;
 import org.apache.hadoop.hbase.protobuf.generated.HBaseProtos;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.codehaus.jettison.badgerfish.BadgerFishDOMDocumentParser;
@@ -80,6 +81,9 @@ public class TestAPI {
       //5.插入数据测试
 //      putData("stu6", "1001", "info1", "name", "zhangsan");
 //      putData("stu6", "1002", "info1", "name", "zhangsan");
+
+      //6.获取数据测试
+        getDate("stu6", "1002", "info1", "name");
       //关闭资源
       close();
 
@@ -232,6 +236,46 @@ public class TestAPI {
 
       //5.关闭表连接
       table.close();
+  }
 
+    /**
+     * 6.获取数据(get)
+     * @param tableName
+     * @param rowKey
+     * @param cf
+     * @param cn
+     * @throws IOException
+     */
+  public static void getDate(String tableName , String rowKey , String cf , String cn) throws IOException {
+
+    //1.获取表对象
+    Table table = conn.getTable(TableName.valueOf(tableName));
+
+    //2.创建get对象
+    Get get = new Get(Bytes.toBytes(rowKey));
+
+    //2.1指定获取的列族
+      //此步必须指定，否则会返回所有的列族的数据
+//      get.addFamily(Bytes.toBytes(cf));
+
+    //2.2指定列族和列
+//      get.addColumn(Bytes.toBytes(cf) , Bytes.toBytes(cn));
+
+    //2.3设置获取数据的版本数
+//      get.setMaxVersions();
+
+    //3.获取数据
+    Result result = table.get(get);
+
+    //4.解析result,并且打印
+    for (Cell cell : result.rawCells()) {
+
+    // 5.打印数据
+        System.out.println("CF:" + Bytes.toString(CellUtil.cloneFamily(cell)) + " CN:" + Bytes.toString(CellUtil.cloneQualifier(cell))
+         + " Value:" + Bytes.toString(CellUtil.cloneValue(cell)));
+    }
+
+    //6.关闭表链接
+      table.close();
   }
 }
