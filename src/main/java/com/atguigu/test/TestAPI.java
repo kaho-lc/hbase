@@ -312,6 +312,15 @@ public class TestAPI {
     table.close();
   }
 
+  /**
+   * 8.删除数据
+   *
+   * @param tableName
+   * @param rowKey
+   * @param cf
+   * @param cn
+   * @throws IOException
+   */
   public static void deleteDate(String tableName, String rowKey, String cf, String cn)
       throws IOException {
 
