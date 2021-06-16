@@ -1,6 +1,5 @@
-package com.atguigu.m2;
+package com.atguigu.mr2;
 
-import com.google.inject.internal.util.$AsynchronousComputationException;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
 import org.apache.hadoop.hbase.mapreduce.TableReducer;

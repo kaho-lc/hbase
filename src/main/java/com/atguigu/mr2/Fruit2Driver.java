@@ -1,7 +1,8 @@
-package com.atguigu.m2;
+package com.atguigu.mr2;
 
 import com.atguigu.mr1.FruitReducer;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
@@ -32,7 +33,7 @@ public class Fruit2Driver implements Tool {
         args[0], new Scan(), Fruit2Mapper.class, ImmutableBytesWritable.class, Put.class, job);
 
     // 4.设置Reducer和输出的表
-    TableMapReduceUtil.initTableReducerJob(args[1], FruitReducer.class, job);
+    TableMapReduceUtil.initTableReducerJob("fruit3", FruitReducer.class, job);
 
     // 5.提交任务
     boolean result = job.waitForCompletion(true);
@@ -53,8 +54,11 @@ public class Fruit2Driver implements Tool {
   public static void main(String[] args) {
 
     try {
-      Configuration configuration = new Configuration();
+
+//      Configuration configuration = new Configuration();
+      Configuration configuration = HBaseConfiguration.create();
       ToolRunner.run(configuration, new Fruit2Driver(), args);
+
     } catch (Exception e) {
       e.printStackTrace();
     }

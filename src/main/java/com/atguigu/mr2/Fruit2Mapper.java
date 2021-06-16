@@ -1,4 +1,4 @@
-package com.atguigu.m2;
+package com.atguigu.mr2;
 
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
